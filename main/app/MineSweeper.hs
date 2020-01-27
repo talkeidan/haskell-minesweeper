@@ -59,7 +59,7 @@ isValidAction w h action x y =
 
 isActionGood :: String -> Int -> Int -> Int -> Int -> Bool
 isActionGood action x y w h
-    | ((action == "Flag") || (action == "Dig")) && (x <= w) && (x > 0) && (y <= h) && (y > 0) = True
+    | ((action == "Flag") || (action == "Dig") || (action == "flag) || (action == "dig")) && (x <= w) && (x > 0) && (y <= h) && (y > 0) = True
     | otherwise = False
 
 areNumbersGood :: Int -> Int -> Int -> Bool
