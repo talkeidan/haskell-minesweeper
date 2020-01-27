@@ -154,6 +154,7 @@ newGameState (Board _ _ mines _) = GameState Map.empty mines
 dig :: Board -> GameState -> Int -> Int -> GameState
 dig (Board w h boardMines boardMap) (GameState gameMap mines) x y
     | (Map.lookup (x,y) boardMap) == Just '0' = (GameState (digNeighbors (Board w h boardMines boardMap) (GameState (Map.insert (x,y) 'd' gameMap) mines) (getMyNeighbors (x,y))) mines)
+    | (Map.lookup (x,y) gameMap) == Just '!' = GameState gameMap mines
     | otherwise = GameState (Map.insert (x,y) 'd' gameMap) mines
 
 getMyNeighbors :: (Int, Int) -> [(Int, Int)]
