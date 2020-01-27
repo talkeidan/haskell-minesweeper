@@ -35,7 +35,7 @@ tryAgain myBoard = do
 
 setAction :: String -> String -> String -> MS.Action
 setAction action x y =
-    if action == "Flag"
+    if (action == "Flag") || (action == "flag")
         then MS.Flag (read x::Int) (read y::Int)
         else MS.Dig (read x::Int) (read y::Int)
 
