@@ -35,12 +35,12 @@ tryAgain myBoard = do
 
 setAction :: String -> String -> String -> MS.Action
 setAction action x y =
-    if (action == "Flag") || (action == "flag")
+    if (action == "Flag" || action == "flag")
         then MS.Flag (read x::Int) (read y::Int)
         else MS.Dig (read x::Int) (read y::Int)
 
 gameStep :: MS.Board -> MS.GameState -> IO ()
--- calls the readAction and act to calculate the next state of the game. if the game is over, will return the final tate of the game, otherwise calls itself
+-- calls the readAction and act to calculate the next state of the game. if the game is over, will return the final state of the game, otherwise calls itself
 gameStep (MS.Board w h mines myMap) myGamestate = do
     putStrLn (MS.showGame (MS.Board w h mines myMap) myGamestate)
     action <- readAction (MS.Board w h mines myMap)
