@@ -59,7 +59,7 @@ isValidAction w h action x y =
 
 isActionGood :: String -> Int -> Int -> Int -> Int -> Bool
 isActionGood action x y w h
-    | ((action == "Flag") || (action == "Dig") || (action == "flag) || (action == "dig")) && (x <= w) && (x > 0) && (y <= h) && (y > 0) = True
+    | ((action == "Flag") || (action == "Dig") || (action == "flag") || (action == "dig")) && (x <= w) && (x > 0) && (y <= h) && (y > 0) = True
     | otherwise = False
 
 areNumbersGood :: Int -> Int -> Int -> Bool
@@ -154,7 +154,7 @@ newGameState (Board _ _ mines _) = GameState Map.empty mines
 dig :: Board -> GameState -> Int -> Int -> GameState
 dig (Board w h boardMines boardMap) (GameState gameMap mines) x y
     | (Map.lookup (x,y) boardMap) == Just '0' = (GameState (digNeighbors (Board w h boardMines boardMap) (GameState (Map.insert (x,y) 'd' gameMap) mines) (getMyNeighbors (x,y))) mines)
-    | (Map.lookup (x,y) gameMap) == Just '!' = GameState gameMap mines
+    | (Map.lookup (x,y) gameMap) == Just '!' = (GameState gameMap mines)
     | otherwise = GameState (Map.insert (x,y) 'd' gameMap) mines
 
 getMyNeighbors :: (Int, Int) -> [(Int, Int)]
@@ -164,6 +164,7 @@ digNeighbors :: Board -> GameState -> [(Int, Int)] -> Map (Int, Int) Char
 digNeighbors _ (GameState myMap _) [] = myMap
 digNeighbors (Board w h boardMines boardMap) (GameState myMap mines) (n:neighbors)
     | n `elem` mines || (Map.lookup n myMap) == Just 'd' = digNeighbors (Board w h boardMines boardMap) (GameState myMap mines) neighbors
+    | (Map.lookup n myMap) == Just '!' = digNeighbors (Board w h boardMines boardMap) (GameState myMap mines) neighbors
     | (Map.lookup n boardMap) /= Just '0' = digNeighbors (Board w h boardMines boardMap) (GameState (Map.insert n 'd' myMap) mines) neighbors
     | (Map.lookup n boardMap) == Just '0' = digNeighbors (Board w h boardMines boardMap) (GameState (Map.insert n 'd' myMap) mines) ((getMyNeighbors n) ++ neighbors)
     | otherwise = digNeighbors (Board w h boardMines boardMap) (GameState myMap mines) neighbors
