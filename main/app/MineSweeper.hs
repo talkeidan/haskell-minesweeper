@@ -1,10 +1,4 @@
 {-# OPTIONS -Wall #-}
--- Vered Harel
--- 205680523
--- Tal Keidan
--- 204917686
--- Raziel Sharabi
--- 204209738
 
 module MineSweeper
     ( newGame
